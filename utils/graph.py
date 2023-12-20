@@ -1,5 +1,6 @@
+from collections import deque
 from heapq import heappop, heappush
-from typing import Callable
+from typing import Any, Callable
 
 
 def dijkstra[
@@ -25,3 +26,24 @@ def dijkstra[
             heappush(queue, ((weight + added_weight), node))
 
     return visited
+
+
+def all_paths[
+    N, I
+](
+    initial_node: tuple[N, I], end_node: N, next_nodes: Callable[[N], list[tuple[N, I]]]
+) -> list[list[tuple[N, I]]]:
+    queue = deque[list[tuple[N, I]]]()
+    queue.append([initial_node])
+    paths: list[list[tuple[N, I]]] = []
+    while queue:
+        path = queue.popleft()
+        node, _ = path[-1]
+        if node == end_node:
+            paths.append(path)
+
+        for next_node, info in next_nodes(node):
+            if next_node not in path:
+                queue.append(path + [(next_node, info)])
+
+    return paths
