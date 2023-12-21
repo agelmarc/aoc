@@ -6,7 +6,7 @@ from typing import Literal
 from utils.graph import all_paths
 
 
-def p1asd(f):
+def p1(f):
     rules, parts = (a.splitlines() for a in f.read().split("\n\n"))
     rules_p = {}
 
